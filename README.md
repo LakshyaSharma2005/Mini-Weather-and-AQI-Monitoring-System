@@ -1,18 +1,10 @@
 # 🌦️ Mini Weather & AQI Monitoring System
 
-![Platform](https://img.shields.io/badge/Platform-ESP32-blue) ![Stack](https://img.shields.io/badge/Stack-C%2B%2B%20%7C%20HTML%20%7C%20Chart.js-orange) ![License](https://img.shields.io/badge/License-MIT-green)
+![Platform](https://img.shields.io/badge/Platform-ESP32-blue) ![Stack](https://img.shields.io/badge/Stack-C%2B%2B%20%7C%20HTML%20%7C%20Chart.js-orange)
 
-A full-stack IoT solution that monitors environmental conditions (Temperature, Humidity, Air Quality) and hosts a **responsive, real-time web dashboard** directly on the ESP32. 
+A full-stack IoT solution that monitors environmental conditions (Temperature, Humidity, Air Quality) and hosts a **responsive, real-time web dashboard** directly on the ESP32.
 
 Features persistent data logging via SPIFFS, dynamic charts, and a RESTful API.
-
----
-
-## 📸 Dashboard Preview
-
-| Real-Time Monitoring | Mobile Responsive |
-|:--------------------:|:-----------------:|
-| ![Desktop View](https://via.placeholder.com/600x300?text=Dashboard+Screenshot+Here) | ![Mobile View](https://via.placeholder.com/300x500?text=Mobile+View) |
 
 ---
 
@@ -86,8 +78,3 @@ To keep your WiFi credentials safe, this project uses a separate `secrets.h` fil
 3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
-
----
-
-## 📜 License
-Distributed under the MIT License. See `LICENSE` for more information.
