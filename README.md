@@ -1,6 +1,6 @@
 # 🌦️ Mini Weather & AQI Monitoring System
 
-![Platform](https://img.shields.io/badge/Platform-ESP32-blue) ![Stack](https://img.shields.io/badge/Stack-C%2B%2B%20%7C%20HTML%20%7C%20Chart.js-orange)
+![Platform](https://img.shields.io/badge/Platform-ESP32-blue) ![Stack](https://img.shields.io/badge/Stack-C%2B%2B%20%7C%20HTML%20%7C%20CSS%20%7C%20Chart.js-orange)
 
 A full-stack IoT solution that monitors environmental conditions (Temperature, Humidity, Air Quality) and hosts a **responsive, real-time web dashboard** directly on the ESP32.
 
