@@ -1,15 +1,12 @@
 #include <WiFi.h>
 #include <WebServer.h>
-#include "SPIFFS.h"
 #include <DHT.h>
 #include <time.h>
 #include <Firebase_ESP_Client.h>
 
-// Firebase credentials
-#define API_KEY "YOUR_API_KEY"
-#define DATABASE_URL "YOUR_DATABASE_URL"
+#define API_KEY "API_KEY"
+#define DATABASE_URL "DATABASE_URL"
 
-// Firebase objects
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
@@ -25,8 +22,8 @@ DHT dht(DHTPIN, DHTTYPE);
 #define RAIN_AO_PIN 35
 #define RAIN_DO_PIN 26
 
-const char* ssid = SECRET_ID;
-const char* password = SECRET_PASS;
+const char* ssid = "realme";
+const char* password = "11111111";
 
 // --- TIME CONFIG ---
 const long  gmtOffset_sec = 19800;
@@ -282,8 +279,15 @@ body {
 }
 .aqi-details { flex: 1; min-width: 0; }
 .aqi-level {
-  font-size: 16px; font-weight: 700; margin-bottom: 4px;
-  transition: color 0.5s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 14px; 
+  font-weight: 700; 
+  margin-bottom: 4px;
+  transition: color 0.5s;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limits text to 2 lines so it doesn't push the slider too far down */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .aqi-threshold { font-size: 11px; color: var(--muted); margin-bottom: 10px; white-space: nowrap; }
 .threshold-row { display: flex; align-items: center; gap: 8px; }
@@ -957,6 +961,14 @@ void setup(){
     ESP.restart();
   }
 
+  config.api_key = API_KEY;
+  config.database_url = DATABASE_URL;
+
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
+
+  Serial.println("Firebase Connected ✅");
+
   Serial.println("Step 3: Syncing Time...");
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer1, ntpServer2);
 
@@ -1004,6 +1016,8 @@ void loop(){
     lastMq2 = sum / 5;
     lastAqi = calculateAQI(lastMq2);
 
+
+
     // Rain Sensor Processing
     int rainRaw = analogRead(RAIN_AO_PIN);
     lastRainPct = map(rainRaw, 3500, 1000, 0, 100);
@@ -1019,6 +1033,23 @@ void loop(){
     }
 
     lastIsRaining = (rainCounter > 2);
+
+    FirebaseJson json;
+
+    json.set("temperature", lastTemp);
+    json.set("humidity", lastHum);
+    json.set("aqi", lastAqi);
+    json.set("rain", lastRainPct);
+    json.set("isRaining", lastIsRaining);
+
+    if (Firebase.RTDB.setJSON(&fbdo, "/sensor", &json)) {
+      Serial.println("Firebase OK ✅");
+    } else {
+      Serial.print("Firebase Error ❌: ");
+      Serial.println(fbdo.errorReason()); 
+    }
+
+    delay(10);
 
     if(lastAqi > aqiThreshold || lastIsRaining)
       digitalWrite(LED_PIN, HIGH);
