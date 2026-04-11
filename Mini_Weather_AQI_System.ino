@@ -2,14 +2,6 @@
 #include <WebServer.h>
 #include <DHT.h>
 #include <time.h>
-#include <Firebase_ESP_Client.h>
-
-#define API_KEY "API_KEY"
-#define DATABASE_URL "DATABASE_URL"
-
-FirebaseData fbdo;
-FirebaseAuth auth;
-FirebaseConfig config;
 
 #define DHTPIN 4
 #define DHTTYPE DHT11
@@ -22,8 +14,8 @@ DHT dht(DHTPIN, DHTTYPE);
 #define RAIN_AO_PIN 35
 #define RAIN_DO_PIN 26
 
-const char* ssid = "realme";
-const char* password = "11111111";
+const char* ssid = "YOUR_ID";
+const char* password = "YOUR_PASS";
 
 // --- TIME CONFIG ---
 const long  gmtOffset_sec = 19800;
